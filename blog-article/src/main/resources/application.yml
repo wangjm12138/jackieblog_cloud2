@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: blog-article
+
+  config:
+    import: classpath:base.yml,classpath:config.yml,classpath:datasource.yml
+# 应用服务 WEB 访问端口
+server:
+  port: 9081
+
+file:
+  upload:
+    protocol: http://
+
+    summaryDir: /summary
+    #注意md文件存放位置,注意最后结尾是'/'
+    abpath: E:/Nodejs_workspace/myblog_final_github/Myblog2/md/
+
+    #url md存放图像的路径映射
+    mdImageDir: /assets/**
+
+    #url md存放封面的路径映射
+    coverImageDir: /cover/**

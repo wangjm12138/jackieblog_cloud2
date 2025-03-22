@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jackie.jackieblog.article.dao.SysUserServiceMapper">
+
+<!--    <insert id="insertUser" parameterType="org.jackieblog.jackieblog.model.SysUser" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into jw_sys_user(id,username,password,enabled,locked,avatar,create_date,deleted,email,last_login,mobile_phone_number,nickname) values(#{id},#{username},#{password},-->
+<!--                                       #{enabled},#{locked},-->
+<!--                                       #{avatar},#{createDate},-->
+<!--                                       #{deleted},#{email},-->
+<!--                                       #{lastLogin},#{mobilePhoneNumber},#{nickname})-->
+<!--    </insert>-->
+
+    <select id="loadUserByUsername" resultType="com.jackie.jackieblog.article.entity.SysUser">
+        select * from jw_sys_user where username=#{username}
+    </select>
+
+    <select id="getUserRolesById" resultType="com.jackie.jackieblog.article.entity.SysRole">
+        select * from jw_sys_role where id in (select rid from jw_sys_user_role where uid=#{id})
+    </select>
+</mapper>

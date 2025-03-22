@@ -1,0 +1,21 @@
+# 注册中心的信息
+server:
+  port: 8070
+spring:
+  application:
+    name: blog-gateway
+  config:
+    import: classpath:base.yml,classpath:config.yml
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_UNIQUE
+      routes:
+        - id: article_route
+          uri: http://127.0.0.1:9081
+          predicates:
+            - Path=/api/**
+        - id: blog-auth
+          uri: lb://blog-auth
+          predicates:
+            - Path=/auth/**,/token/**

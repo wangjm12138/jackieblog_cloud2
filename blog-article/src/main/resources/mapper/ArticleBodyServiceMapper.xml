@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis配置文件-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jackie.jackieblog.article.dao.ArticleBodyServiceMapper">
+
+    <resultMap id="articleBodyMap" type="com.jackie.jackieblog.article.entity.ArticleBody">
+        <id column="id" property="id" />
+        <result column="content_html" property="contentHtml"/>
+        <result column="article_id" property="articleId"/>
+    </resultMap>
+
+
+    <select id="searchArticleById" resultMap="articleBodyMap">
+        select * from jw_article_body where article_id=#{id}
+    </select>
+
+</mapper>
