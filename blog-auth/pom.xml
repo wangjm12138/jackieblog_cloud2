@@ -5,47 +5,44 @@
 
     <parent>
         <groupId>com.jackie.blog</groupId>
-        <artifactId>blog-common</artifactId>
+        <artifactId>blog-cloud</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+
     <groupId>com.jackie.blog</groupId>
-    <artifactId>blog-datasource</artifactId>
+    <artifactId>blog-auth</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-datasource</name>
-    <description>blog-datasource</description>
 
 
+    <name>blog-auth</name>
+    <description>blog-auth</description>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
-
-
-
     <dependencies>
-
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.7</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
+
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.24</version>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-config</artifactId>
         </dependency>
+
+
 
     </dependencies>
-
 
 </project>

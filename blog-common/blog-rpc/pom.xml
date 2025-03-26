@@ -10,10 +10,11 @@
     </parent>
 
     <groupId>com.jackie.blog</groupId>
-    <artifactId>blog-datasource</artifactId>
+    <artifactId>blog-rpc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-datasource</name>
-    <description>blog-datasource</description>
+
+    <name>blog-rpc</name>
+    <description>blog-rpc</description>
 
 
     <properties>
@@ -23,28 +24,21 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
-
-
     <dependencies>
-
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.7</version>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-registry-nacos</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.24</version>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-base</artifactId>
         </dependency>
-
     </dependencies>
 
 
