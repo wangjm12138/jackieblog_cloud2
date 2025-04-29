@@ -10,7 +10,7 @@
 
     <description>Jackie Blog cloud</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>3.0.2</spring-boot.version>
@@ -24,7 +24,7 @@
     <modules>
         <module>blog-article</module>
         <module>blog-common</module>
-        <module>blog-mail</module>
+<!--        <module>blog-mail</module>-->
         <module>blog-gateway</module>
         <module>blog-auth</module>
     </modules>
