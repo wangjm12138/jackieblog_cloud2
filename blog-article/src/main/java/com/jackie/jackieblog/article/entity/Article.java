@@ -1,6 +1,9 @@
 package com.jackie.jackieblog.article.entity;
 
+import com.jackie.jackieblog.datasource.domain.entity.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -13,25 +16,38 @@ import java.util.Date;
  * @Blog: http://www.jackieblog.top
  * @Date: 2023年02月19日 21:59
  */
-@Data
-public class Article {
+@Getter
+@Setter
+public class Article extends BaseEntity {
 
-//    public static final int Article_TOP = 1;
-//
-//    public static final int Article_Common = 0;
-
-    private Long id;
-
+    /**
+     * 文章标题
+     */
     private String title;
 
+    /**
+     * 创建日期
+     */
     private Timestamp createDate;
 
+    /**
+     * 摘要
+     */
     private String summary;
 
+    /**
+     * 浏览数
+     */
     private Integer lookNum;
 
+    /**
+     * 收藏数
+     */
     private Integer loveNum;
 
+    /**
+     * 评论数
+     */
     private Integer commentNum;
 
     /**

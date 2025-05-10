@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 通用出参
  *
- * @author Hollis
+ * @author jackie wang
  */
 @Setter
 @Getter

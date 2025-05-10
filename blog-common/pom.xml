@@ -29,6 +29,7 @@
         <module>blog-datasource</module>
         <module>blog-config</module>
         <module>blog-rpc</module>
+        <module>blog-cache</module>
     </modules>
 
     <dependencies>
@@ -50,9 +51,16 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-<!--            <version>1.18.32</version>-->
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
     </dependencies>
+<!--    spring-boot-maven-plugin 主要在 Maven 的 package 阶段 使用，具体来说，它的 repackage 目标（goal）默认绑定到 package 阶段-->
+<!--    在聚合工程中，某些子模块可能是工具库或依赖包（如 common 模块），不需要打包成可执行 JAR 用skip-->
+<!--    这意味着执行 mvn package 时，Maven 会先由 maven-jar-plugin 生成普通 JAR，然后 spring-boot-maven-plugin 将其重新打包为可执行的 Fat JAR-->
+<!--    skip 仅跳过插件的 repackage 目标，但 maven-jar-plugin 仍会生成普通 JAR（包含编译类和资源）-->
     <build>
         <plugins>
             <plugin>

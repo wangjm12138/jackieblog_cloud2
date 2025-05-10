@@ -41,8 +41,6 @@
             <artifactId>blog-config</artifactId>
         </dependency>
 
-
-
     </dependencies>
 
 </project>
