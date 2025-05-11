@@ -1,8 +1,10 @@
 package com.jackie.jackieblog.article.controller;
 
+import com.jackie.jackieblog.article.entity.ArticleBody;
 import com.jackie.jackieblog.article.service.ArticleBodyService;
 import com.jackie.jackieblog.article.service.ArticleService;
 import com.jackie.jackieblog.article.utils.PageParams;
+import com.jackie.jackieblog.article.vo.ArticleBodyVo;
 import com.jackie.jackieblog.article.vo.ArticleVo;
 import com.jackie.jackieblog.base.response.MultiResponse;
 import com.jackie.jackieblog.base.response.PageResponse;
@@ -37,13 +39,11 @@ public class ArticleController {
     @PostMapping
     public MultiResult<ArticleVo> listArticle(@RequestBody PageParams pageParams) throws InterruptedException {
         PageResponse<ArticleVo> pageResponse = articleService.listArticle(pageParams);
-        System.out.println("jackie");
-        System.out.println(pageResponse.getTotalPage());
         return MultiResultConvertor.convert(pageResponse);
     }
 
     @GetMapping("/detail/{Id}")
-    public Result listArticleDetail(@PathVariable("Id") Long id) {
+    public Result<ArticleBodyVo> listArticleDetail(@PathVariable("Id") Long id) {
         return articleBodyService.searchArticleById(id);
     }
 

@@ -109,7 +109,6 @@ public class ArticleService {
 //        wrapperRecordsVo.setPages(articleIPage.getPages());
 //        wrapperRecordsVo.setPageSize(articleIPage.getSize());
 //        wrapperRecordsVo.setTotal(articleIPage.getTotal());
-        System.out.println(articleIPage.getPages());
         if (articleIPage.getCurrent() == articleIPage.getPages()) {
             articlePageResponse = PageResponse.of(records, articleIPage.getTotal(), articleIPage.getSize(), articleIPage.getCurrent(), articleIPage.getPages(), true);
 

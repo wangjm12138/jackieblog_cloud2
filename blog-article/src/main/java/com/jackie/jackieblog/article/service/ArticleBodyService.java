@@ -3,7 +3,10 @@ package com.jackie.jackieblog.article.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jackie.jackieblog.article.dao.ArticleBodyServiceMapper;
 import com.jackie.jackieblog.article.entity.ArticleBody;
+import com.jackie.jackieblog.article.vo.ArticleBodyVo;
+import com.jackie.jackieblog.article.vo.ArticleVo;
 import com.jackie.jackieblog.base.vo.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +29,11 @@ public class ArticleBodyService {
 
 
 
-    public Result searchArticleById(Long id){
-        System.out.println(id);
-        ArticleBody record = articleBodyServiceMapper.searchArticleById(id);
-        return Result.success(record);
+    public Result<ArticleBodyVo> searchArticleById(Long id){
+        ArticleBodyVo articleBodyVo = new ArticleBodyVo();
+        ArticleBody articleBody = articleBodyServiceMapper.searchArticleById(id);
+        BeanUtils.copyProperties(articleBody, articleBodyVo);
+
+        return Result.success(articleBodyVo);
     }
 }
