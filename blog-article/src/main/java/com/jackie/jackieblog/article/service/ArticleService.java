@@ -58,22 +58,25 @@ public class ArticleService {
 //    private StringRedisTemplate redisTemplate;
 
 
-    public Result listArticleTop() {
+    public Result<List<ArticleVo>> listArticleTop() {
         List<Article> records = articleServiceMapper.listArticleTop();
+        System.out.println(records);
         List<ArticleVo> articleVoList = new ArrayList<>();
-        for (Article record : records) {
-            articleVoList.add(copy(record));
-        }
+        articleVoList = ArticleConvertor.INSTANCE.mapToVo(records);
+//        for (Article record : records) {
+//            articleVoList.add(copy(record));
+//        }
 
         return Result.success(articleVoList);
     }
 
-    public Result listArticleRecent() {
+    public Result<List<ArticleVo>> listArticleRecent() {
         List<Article> records = articleServiceMapper.listArticleRecent();
         List<ArticleVo> articleVoList = new ArrayList<>();
-        for (Article record : records) {
-            articleVoList.add(copy(record));
-        }
+        articleVoList = ArticleConvertor.INSTANCE.mapToVo(records);
+//        for (Article record : records) {
+//            articleVoList.add(copy(record));
+//        }
         return Result.success(articleVoList);
     }
 
@@ -87,69 +90,36 @@ public class ArticleService {
     public PageResponse<ArticleVo> listArticle(PageParams pageParams) {
         PageResponse<Article> articlePageResponse;
         Page<Article> page = new Page<>(pageParams.getPage(), pageParams.getPageSize());
-//        List<Integer> categoryIdList = new ArrayList<>();
-//        if(pageParams.getMenuId()!=null) {
-//            List<Category> categoryList = categoryServiceMapper.listCategoryByMenuId(pageParams.getMenuId());
-//            categoryIdList = categoryList.stream().map((item) -> item.getId()).collect(Collectors.toList());
-//        }
+
         IPage<Article> articleIPage = articleServiceMapper.listArticle(
                 page,
                 pageParams.getMenuId(),pageParams.getCateId(),pageParams.getCateDetailsId());
         List<Article> records = articleIPage.getRecords();
-//        for (Article record : records) {
-//            String viewCount = (String) redisTemplate.opsForHash().get("view_count", String.valueOf(record.getId()));
-//            if (viewCount != null) {
-//                record.setViewCounts(Integer.parseInt(viewCount));
-//            }
-//        }
-//        List<ArticleVo> recordsVo = copyList(records);
-//        PageResponse.of(recordsVo, articleIPage.getTotal(), articleIPage.getSize(), articleIPage.getCurrent(), articleIPage.getPages())
-//        WrapperToFrontend wrapperRecordsVo = new WrapperToFrontend();
-//        wrapperRecordsVo.setPageNum(articleIPage.getCurrent());
-//        wrapperRecordsVo.setPages(articleIPage.getPages());
-//        wrapperRecordsVo.setPageSize(articleIPage.getSize());
-//        wrapperRecordsVo.setTotal(articleIPage.getTotal());
+
         if (articleIPage.getCurrent() == articleIPage.getPages()) {
             articlePageResponse = PageResponse.of(records, articleIPage.getTotal(), articleIPage.getSize(), articleIPage.getCurrent(), articleIPage.getPages(), true);
-
-//            wrapperRecordsVo.setLast(true);
         } else {
             articlePageResponse = PageResponse.of(records, articleIPage.getTotal(), articleIPage.getSize(), articleIPage.getCurrent(), articleIPage.getPages(), false);
-//            wrapperRecordsVo.setLast(false);
         }
-//        wrapperRecordsVo.setValue(recordsVo);
         return PageResponse.of(ArticleConvertor.INSTANCE.mapToVo(articlePageResponse.getDatas()),articlePageResponse.getTotal(), articlePageResponse.getPageSize(), articlePageResponse.getCurrentPage(), articlePageResponse.getTotalPage(), articlePageResponse.isLast());
     }
 
-
-    private List<ArticleVo> copyList(List<Article> records) {
-
-        List<ArticleVo> articleVoList = new ArrayList<>();
-        for (Article record : records) {
-            articleVoList.add(copy(record));
-        }
-        return articleVoList;
-    }
-
-     private ArticleVo copy(Article article) {
-
-        ArticleVo articleVo = new ArticleVo();
-//        articleVo.setId(String.valueOf(article.getId()));
-        BeanUtils.copyProperties(article,articleVo);
-
-        articleVo.setCreateDate(article.getCreateDate().toString());
-
-
-//        if (isBody){
-//            Long bodyId = article.getBodyId();
-//            articleVo.setBody(findArticleBodyById(bodyId));
+//    private List<ArticleVo> copyList(List<Article> records) {
+//
+//        List<ArticleVo> articleVoList = new ArrayList<>();
+//        for (Article record : records) {
+//            articleVoList.add(copy(record));
 //        }
-//        if (isCategory){
-//            Long categoryId = article.getCategoryId();
-//            articleVo.setCategory(categoryService.findCategoryById(categoryId));
-//        }
-        return articleVo;
-    }
+//        return articleVoList;
+//    }
+//
+//     private ArticleVo copy(Article article) {
+//
+//        ArticleVo articleVo = new ArticleVo();
+//        BeanUtils.copyProperties(article,articleVo);
+//        articleVo.setCreateDate(article.getCreateDate().toString());
+//        return articleVo;
+//    }
 
 }
 
