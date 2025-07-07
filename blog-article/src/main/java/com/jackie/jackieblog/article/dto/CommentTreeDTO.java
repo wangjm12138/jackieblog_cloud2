@@ -3,9 +3,10 @@ package com.jackie.jackieblog.article.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
-public class CommentNodeDTO {
+public class CommentTreeDTO {
 
     private Long id;
 
@@ -22,4 +23,6 @@ public class CommentNodeDTO {
     private int depth;
 
     private int treeRoot;
+
+    private List<CommentTreeDTO> children;
 }

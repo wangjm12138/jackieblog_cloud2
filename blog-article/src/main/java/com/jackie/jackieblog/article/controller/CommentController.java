@@ -2,12 +2,10 @@ package com.jackie.jackieblog.article.controller;
 
 import com.jackie.jackieblog.article.dto.CommentNodeDTO;
 import com.jackie.jackieblog.article.service.CommentService;
+import com.jackie.jackieblog.article.utils.PageParams;
 import com.jackie.jackieblog.base.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class CommentController {
 
 
     @GetMapping("/{articleId}")
-    public Result<List<CommentNodeDTO>> listArticleComment(@PathVariable("articleId") Long articleId) {
+    public Result<List<CommentNodeDTO>> listArticleComment(@PathVariable("articleId") Long articleId, @RequestParam(required = false, defaultValue = "1") Integer page,@RequestParam(required = false, defaultValue = "10") Integer limit) {
         return commentService.listCommentByArticle(articleId);
     }
 }
