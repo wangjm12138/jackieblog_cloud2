@@ -3,6 +3,11 @@ package com.jackie.jackieblog.article.controller;
 import com.jackie.jackieblog.article.dto.CommentNodeDTO;
 import com.jackie.jackieblog.article.service.CommentService;
 import com.jackie.jackieblog.article.utils.PageParams;
+import com.jackie.jackieblog.article.vo.ArticleVo;
+import com.jackie.jackieblog.article.vo.CommentTreeVo;
+import com.jackie.jackieblog.base.response.PageResponse;
+import com.jackie.jackieblog.base.utils.MultiResultConvertor;
+import com.jackie.jackieblog.base.vo.MultiResult;
 import com.jackie.jackieblog.base.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +31,8 @@ public class CommentController {
 
 
     @GetMapping("/{articleId}")
-    public Result<List<CommentNodeDTO>> listArticleComment(@PathVariable("articleId") Long articleId, @RequestParam(required = false, defaultValue = "1") Integer page,@RequestParam(required = false, defaultValue = "10") Integer limit) {
-        return commentService.listCommentByArticle(articleId);
+    public MultiResult<CommentTreeVo> listArticleComment(@PathVariable("articleId") Long articleId, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer limit) {
+        PageResponse<CommentTreeVo> pageResponse =  commentService.listCommentByArticle(articleId, page, limit);
+        return MultiResultConvertor.convert(pageResponse);
     }
 }

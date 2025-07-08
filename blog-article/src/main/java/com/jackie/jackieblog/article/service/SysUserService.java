@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @Date: 2023年03月18日 20:26
  */
 @Service
-//public class SysUserService implements UserDetailsService {
 public class SysUserService {
 
     @Autowired
@@ -46,7 +45,7 @@ public class SysUserService {
         SysUser sysUser = sysUserServiceMapper.selectById(id);
         if (sysUser == null){
             sysUser = new SysUser();
-            sysUser.setNickname("Jackie");
+            sysUser.setNickname("anonymity");
         }
         return sysUser;
     }

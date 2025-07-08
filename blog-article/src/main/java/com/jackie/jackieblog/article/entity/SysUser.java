@@ -42,4 +42,5 @@ public class SysUser extends BaseEntity {
 
     private String nickname;
 
+    private Integer gender;
 }

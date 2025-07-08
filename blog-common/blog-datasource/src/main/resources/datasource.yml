@@ -20,13 +20,21 @@ spring:
       pool-prepared-statements: true # 是否开启预处理语句池。预处理语句池可以提高性能，特别是在执行相同SQL语句多次时。默认为true。
       max-pool-prepared-statement-per-connection-size: 20 #每个连接上允许的最大预处理语句数。默认值为20。
 
-# MyBatis配置
-mybatis:
+## MyBatis配置
+#mybatis:
+#  global-config:
+#    db-config:
+#      table-prefix: jw_
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+##    map-underscore-to-camel-case: true # 将数据库字段的下划线命名转换为驼峰命名
+#  mapper-locations: classpath:mapper/*.xml # MyBatis映射文件所在的位置，这里是使用XML的配置方式时需要配置的部分
+
+mybatis-plus:
   global-config:
     db-config:
       table-prefix: jw_
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#    map-underscore-to-camel-case: true # 将数据库字段的下划线命名转换为驼峰命名
+  #    map-underscore-to-camel-case: true # 将数据库字段的下划线命名转换为驼峰命名
   mapper-locations: classpath:mapper/*.xml # MyBatis映射文件所在的位置，这里是使用XML的配置方式时需要配置的部分
-

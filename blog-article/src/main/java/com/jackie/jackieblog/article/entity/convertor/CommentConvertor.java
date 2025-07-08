@@ -1,9 +1,6 @@
 package com.jackie.jackieblog.article.entity.convertor;
 
-import com.jackie.jackieblog.article.dto.CommentNodeDTO;
 import com.jackie.jackieblog.article.dto.CommentTreeDTO;
-import com.jackie.jackieblog.article.entity.Article;
-import com.jackie.jackieblog.article.vo.ArticleVo;
 import com.jackie.jackieblog.article.vo.CommentTreeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;

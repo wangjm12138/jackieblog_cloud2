@@ -24,5 +24,11 @@ public class CommentTreeDTO {
 
     private int treeRoot;
 
+    private String nickname;
+
+    private String avatar;
+
+    private int gender;
+
     private List<CommentTreeDTO> children;
 }

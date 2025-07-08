@@ -13,7 +13,11 @@ public class CommentTreeVo {
 
     private Long articleId;
 
-    private String username;
+    private String nickname;
+
+    private String avatar;
+
+    private int gender;
 
     private String content;
 

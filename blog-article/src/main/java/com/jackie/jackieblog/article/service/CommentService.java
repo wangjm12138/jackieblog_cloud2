@@ -3,9 +3,11 @@ package com.jackie.jackieblog.article.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jackie.jackieblog.article.dao.CommentServiceMapper;
+import com.jackie.jackieblog.article.dao.SysUserServiceMapper;
 import com.jackie.jackieblog.article.dto.CommentNodeDTO;
 import com.jackie.jackieblog.article.dto.CommentTreeDTO;
 import com.jackie.jackieblog.article.entity.Article;
+import com.jackie.jackieblog.article.entity.SysUser;
 import com.jackie.jackieblog.article.entity.convertor.ArticleConvertor;
 import com.jackie.jackieblog.article.entity.convertor.CommentConvertor;
 import com.jackie.jackieblog.article.vo.CommentTreeVo;
@@ -22,18 +24,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
+    @Autowired
+    private SysUserService sysUserService;
 
     @Autowired
     private CommentServiceMapper commentServiceMapper;
 
     private CommentTreeDTO convertToDTO(CommentNodeDTO commentNodeDTO) {
         CommentTreeDTO commentTreeDTO = new CommentTreeDTO();
+        SysUser user = sysUserService.findUserById(commentNodeDTO.getUserId());
         commentTreeDTO.setId(commentNodeDTO.getId());
         commentTreeDTO.setContent(commentNodeDTO.getContent());
-        commentTreeDTO.setArticleId(commentTreeDTO.getArticleId());
+        commentTreeDTO.setArticleId(commentNodeDTO.getArticleId());
         commentTreeDTO.setCreateDate(commentNodeDTO.getCreateDate());
         commentTreeDTO.setUpdateDate(commentNodeDTO.getUpdateDate());
-        commentTreeDTO.setUserId(commentTreeDTO.getUserId());
+        commentTreeDTO.setUserId(commentNodeDTO.getUserId());
+        commentTreeDTO.setNickname(user.getNickname());
+        commentTreeDTO.setAvatar(user.getAvatar());
+        commentTreeDTO.setGender(user.getGender());
         commentTreeDTO.setDepth(commentNodeDTO.getDepth());
         commentTreeDTO.setTreeRoot(commentNodeDTO.getTreeRoot());
         return commentTreeDTO;
@@ -66,8 +74,10 @@ public class CommentService {
                 page,
                 articleId);
         List<CommentNodeDTO> records = commentNodeDTOIPage.getRecords();
+        System.out.println(records);
         List<CommentTreeDTO> rootCommentTree = this.rootCommentTree(records);
-
+        System.out.println("---------------------");
+        System.out.println(rootCommentTree);
         PageResponse<CommentTreeDTO> commentTreeDTOPageResponse;
         if (commentNodeDTOIPage.getCurrent() == commentNodeDTOIPage.getPages()) {
             commentTreeDTOPageResponse = PageResponse.of(rootCommentTree, commentNodeDTOIPage.getTotal(), commentNodeDTOIPage.getSize(), commentNodeDTOIPage.getCurrent(), commentNodeDTOIPage.getPages(), true);
