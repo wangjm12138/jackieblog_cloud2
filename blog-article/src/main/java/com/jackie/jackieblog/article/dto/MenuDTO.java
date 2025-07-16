@@ -1,9 +1,6 @@
-package com.jackie.jackieblog.article.vo;
+package com.jackie.jackieblog.article.dto;
 
-import com.jackie.jackieblog.article.entity.Category;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @version 1.0.0
@@ -14,7 +11,15 @@ import java.util.List;
  * @Date: 2024/12/26 20:44
  */
 @Data
-public class MenuByIdVo {
+public class MenuDTO {
+
+    private Integer menuId;
+
+    private String menuName;
+
+    private Integer menuAmount;
+
+    private String menuIcon;
 
     private Integer categoryId;
 
@@ -22,10 +27,13 @@ public class MenuByIdVo {
 
     private Integer categoryAmount;
 
+    private String categoryIcon;
+
     private Integer categoryDetailsId;
 
     private String categoryDetailsName;
 
     private Integer categoryDetailsAmount;
 
+    private String categoryDetailsIcon;
 }

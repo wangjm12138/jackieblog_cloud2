@@ -10,31 +10,38 @@
         <result column="amount" property="amount"/>
     </resultMap>
 
-    <resultMap id="AllMenuVo" type="com.jackie.jackieblog.article.vo.AllMenuVo">
+    <resultMap id="AllMenuDTO" type="com.jackie.jackieblog.article.dto.MenuDTO">
         <result column="menuId" property="menuId" />
         <result column="menuName" property="menuName"/>
         <result column="menuAmount" property="menuAmount"/>
+        <result column="menuIcon" property="menuIcon"/>
         <result column="categoryId" property="categoryId" />
         <result column="categoryName" property="categoryName"/>
         <result column="categoryAmount" property="categoryAmount"/>
+        <result column="categoryIcon" property="categoryIcon"/>
         <result column="categoryDetailsId" property="categoryDetailsId" />
         <result column="categoryDetailsName" property="categoryDetailsName"/>
         <result column="categoryDetailsAmount" property="categoryDetailsAmount"/>
+        <result column="categoryDetailsIcon" property="categoryDetailsIcon"/>
+
     </resultMap>
 
 
-    <resultMap id="MenuByIdVo" type="com.jackie.jackieblog.article.vo.MenuByIdVo">
+    <resultMap id="MenuByIdVo" type="com.jackie.jackieblog.article.dto.MenuDTO">
         <result column="categoryId" property="categoryId" />
         <result column="categoryName" property="categoryName"/>
         <result column="categoryAmount" property="categoryAmount"/>
+        <result column="categoryIcon" property="categoryIcon"/>
         <result column="categoryDetailsId" property="categoryDetailsId" />
         <result column="categoryDetailsName" property="categoryDetailsName"/>
         <result column="categoryDetailsAmount" property="categoryDetailsAmount"/>
+        <result column="categoryDetailsIcon" property="categoryDetailsIcon"/>
+
     </resultMap>
 
 
-    <select id="listMenu" resultMap="AllMenuVo">
-        select jw_menu.id as menuId, jw_menu.name as menuName, jw_menu.amount as menuAmount, jw_category.id as categoryId, jw_category.`name` as categoryName, jw_category.amount as categoryAmount, jw_category_details.id as categoryDetailsId, jw_category_details.name as categoryDetailsName, jw_category_details.amount as categoryDetailsAmount from jw_menu LEFT JOIN jw_category on jw_menu.id = jw_category.menu_id LEFT JOIN jw_category_details on jw_category.id = jw_category_details.category_id
+    <select id="listMenu" resultMap="AllMenuDTO">
+        select jw_menu.id as menuId, jw_menu.name as menuName, jw_menu.amount as menuAmount, jw_menu.icon as menuIcon, jw_category.id as categoryId, jw_category.`name` as categoryName, jw_category.amount as categoryAmount, jw_category.icon as categoryIcon, jw_category_details.id as categoryDetailsId, jw_category_details.name as categoryDetailsName, jw_category_details.amount as categoryDetailsAmount, jw_category_details.icon as categoryDetailsIcon from jw_menu LEFT JOIN jw_category on jw_menu.id = jw_category.menu_id LEFT JOIN jw_category_details on jw_category.id = jw_category_details.category_id
     </select>
 
 

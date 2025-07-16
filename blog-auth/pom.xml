@@ -35,6 +35,10 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-base</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.jackie.blog</groupId>

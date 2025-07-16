@@ -74,10 +74,7 @@ public class CommentService {
                 page,
                 articleId);
         List<CommentNodeDTO> records = commentNodeDTOIPage.getRecords();
-        System.out.println(records);
         List<CommentTreeDTO> rootCommentTree = this.rootCommentTree(records);
-        System.out.println("---------------------");
-        System.out.println(rootCommentTree);
         PageResponse<CommentTreeDTO> commentTreeDTOPageResponse;
         if (commentNodeDTOIPage.getCurrent() == commentNodeDTOIPage.getPages()) {
             commentTreeDTOPageResponse = PageResponse.of(rootCommentTree, commentNodeDTOIPage.getTotal(), commentNodeDTOIPage.getSize(), commentNodeDTOIPage.getCurrent(), commentNodeDTOIPage.getPages(), true);

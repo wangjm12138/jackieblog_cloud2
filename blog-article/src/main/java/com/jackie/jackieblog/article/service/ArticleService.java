@@ -104,22 +104,5 @@ public class ArticleService {
         return PageResponse.of(ArticleConvertor.INSTANCE.mapToVo(articlePageResponse.getDatas()),articlePageResponse.getTotal(), articlePageResponse.getPageSize(), articlePageResponse.getCurrentPage(), articlePageResponse.getTotalPage(), articlePageResponse.isLast());
     }
 
-//    private List<ArticleVo> copyList(List<Article> records) {
-//
-//        List<ArticleVo> articleVoList = new ArrayList<>();
-//        for (Article record : records) {
-//            articleVoList.add(copy(record));
-//        }
-//        return articleVoList;
-//    }
-//
-//     private ArticleVo copy(Article article) {
-//
-//        ArticleVo articleVo = new ArticleVo();
-//        BeanUtils.copyProperties(article,articleVo);
-//        articleVo.setCreateDate(article.getCreateDate().toString());
-//        return articleVo;
-//    }
-
 }
 

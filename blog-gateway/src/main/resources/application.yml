@@ -18,4 +18,4 @@ spring:
         - id: blog-auth
           uri: lb://blog-auth
           predicates:
-            - Path=/auth/**,/token/**
+            - Path=/api/auth/**,/api/token/**

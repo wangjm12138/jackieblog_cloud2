@@ -1,15 +1,19 @@
 package com.jackie.jackieblog.article.service;
 
-import com.jackie.jackieblog.article.dao.CategoryServiceMapper;
 import com.jackie.jackieblog.article.dao.MenuServiceMapper;
-import com.jackie.jackieblog.article.entity.Menu;
-import com.jackie.jackieblog.article.vo.AllMenuVo;
-import com.jackie.jackieblog.article.vo.MenuByIdVo;
+import com.jackie.jackieblog.article.dto.CommentTreeDTO;
+import com.jackie.jackieblog.article.dto.MenuDTO;
+import com.jackie.jackieblog.article.dto.MenuTreeDTO;
+import com.jackie.jackieblog.article.entity.convertor.MenuConvertor;
+import com.jackie.jackieblog.article.vo.MenuTreeVo;
 import com.jackie.jackieblog.base.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @version 1.0.0
@@ -24,14 +28,56 @@ public class MenuService {
 
     @Autowired
     private MenuServiceMapper menuServiceMapper;
-    public Result listMenu() {
 
-        List<AllMenuVo> records = menuServiceMapper.listMenu();
-        return Result.success(records);
+
+    private List<MenuTreeDTO> rootMenuTree(List<MenuDTO> records) {
+        System.out.println(records);
+        List<MenuTreeDTO> ret = records.stream().collect(Collectors.groupingBy(MenuDTO::getMenuId)).entrySet().stream()
+                .map(menuEntry -> {
+                    MenuTreeDTO menuTreeDTO = new MenuTreeDTO();
+                    menuTreeDTO.setMenuId(menuEntry.getKey());
+                    menuTreeDTO.setMenuName(menuEntry.getValue().get(0).getMenuName());
+                    menuTreeDTO.setMenuIcon(menuEntry.getValue().get(0).getMenuIcon());
+
+                    //二级菜单
+                    menuTreeDTO.setChildren(
+                            menuEntry.getValue().stream().collect(Collectors.groupingBy(MenuDTO::getCategoryId))
+                                    .entrySet().stream()
+                                    .map(categoryEntry -> {
+                                        MenuTreeDTO cateTreeDTO = new MenuTreeDTO();
+                                        cateTreeDTO.setMenuId(categoryEntry.getKey());
+                                        cateTreeDTO.setMenuName(categoryEntry.getValue().get(0).getCategoryName());
+                                        cateTreeDTO.setMenuIcon(categoryEntry.getValue().get(0).getCategoryIcon());
+                                        //三级菜单
+                                        cateTreeDTO.setChildren(
+                                                categoryEntry.getValue().stream()
+                                                        .filter(item -> item.getCategoryDetailsId() != null)
+                                                        .map(item -> {
+                                                            MenuTreeDTO detailTreeDTO = new MenuTreeDTO();
+                                                            detailTreeDTO.setMenuId(item.getCategoryDetailsId());
+                                                            detailTreeDTO.setMenuName(item.getCategoryDetailsName());
+                                                            detailTreeDTO.setMenuIcon(item.getCategoryDetailsIcon());
+                                                            return detailTreeDTO;
+                                                        }).collect(Collectors.toList())
+                                        );
+                                        return cateTreeDTO;
+                                    }).collect(Collectors.toList())
+                    );
+                    return menuTreeDTO;
+                }).collect(Collectors.toList());
+        System.out.println(ret);
+        return ret;
     }
 
-    public Result listAllCategoryByMenuId(Integer id) {
-        List<MenuByIdVo> records = menuServiceMapper.listAllCategoryByMenuId(id);
-        return Result.success(records);
+    public Result<List<MenuTreeVo>> listMenu() {
+        List<MenuDTO> records = menuServiceMapper.listMenu();
+        List<MenuTreeDTO>  menuTreeDTOList = rootMenuTree(records);
+        return Result.success(MenuConvertor.INSTANCE.mapToVo(menuTreeDTOList));
+    }
+
+    public Result<List<MenuTreeVo>>  listAllCategoryByMenuId(Integer id) {
+        List<MenuDTO> records = menuServiceMapper.listAllCategoryByMenuId(id);
+        List<MenuTreeDTO>  menuTreeDTOList = rootMenuTree(records);
+        return Result.success(MenuConvertor.INSTANCE.mapToVo(menuTreeDTOList));
     }
 }

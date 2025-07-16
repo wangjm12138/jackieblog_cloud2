@@ -1,6 +1,9 @@
 package com.jackie.jackieblog.article.vo;
 
+import com.jackie.jackieblog.article.dto.MenuTreeDTO;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @version 1.0.0
@@ -11,24 +14,15 @@ import lombok.Data;
  * @Date: 2024/12/26 20:44
  */
 @Data
-public class AllMenuVo {
+public class MenuTreeVo {
 
     private Integer menuId;
 
     private String menuName;
 
-    private Integer menuAmount;
+    private String menuIcon;
 
-    private Integer categoryId;
+    private List<MenuTreeDTO> children;
 
-    private String categoryName;
-
-    private Integer categoryAmount;
-
-    private Integer categoryDetailsId;
-
-    private String categoryDetailsName;
-
-    private Integer categoryDetailsAmount;
 
 }

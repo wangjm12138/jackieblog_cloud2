@@ -56,6 +56,12 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.22</version>
+        </dependency>
     </dependencies>
 <!--    spring-boot-maven-plugin 主要在 Maven 的 package 阶段 使用，具体来说，它的 repackage 目标（goal）默认绑定到 package 阶段-->
 <!--    在聚合工程中，某些子模块可能是工具库或依赖包（如 common 模块），不需要打包成可执行 JAR 用skip-->
