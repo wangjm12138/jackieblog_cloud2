@@ -37,6 +37,11 @@
 
         <dependency>
             <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-cache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
             <artifactId>blog-base</artifactId>
         </dependency>
 
@@ -45,6 +50,19 @@
             <artifactId>blog-config</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-rpc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-sa-token</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

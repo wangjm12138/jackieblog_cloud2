@@ -22,11 +22,11 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>blog-article</module>
         <module>blog-common</module>
 <!--        <module>blog-mail</module>-->
         <module>blog-gateway</module>
         <module>blog-auth</module>
+        <module>blog-management</module>
     </modules>
 
 
@@ -38,7 +38,16 @@
                 <artifactId>blog-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.jackie.blog</groupId>
+                <artifactId>blog-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jackie.blog</groupId>
+                <artifactId>blog-rpc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.jackie.blog</groupId>
                 <artifactId>blog-config</artifactId>
@@ -57,6 +66,11 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.jackie.blog</groupId>
+                <artifactId>blog-sa-token</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
