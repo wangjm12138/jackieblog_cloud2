@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-@MapperScan(basePackages = "com.jackie.jackieblog.article.dao")
+@MapperScan(basePackages = "com.jackie.blog.article.dao")
 public class BlogArticleApplication {
 
     public static void main(String[] args) {

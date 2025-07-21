@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @author Hollis
  */
 @Configuration
-@EnableMethodCache(basePackages = "com.jackie.jackieblog")
+@EnableMethodCache(basePackages = "com.jackie.blog")
 public class CacheConfiguration {
 }
