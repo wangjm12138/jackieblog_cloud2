@@ -25,8 +25,4 @@ public class UserInfo extends BasicUserInfo {
      */
     private String inviteCode;
 
-    /**
-     * 注册时间
-     */
-    private Date createTime;
 }

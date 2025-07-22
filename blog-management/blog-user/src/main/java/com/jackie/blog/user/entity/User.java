@@ -3,6 +3,8 @@ package com.jackie.blog.user.entity;
 import com.jackie.blog.datasource.domain.entity.BaseEntity;
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * @作者 Jackie Wang
@@ -23,11 +25,11 @@ public class User extends BaseEntity {
 
     private String avatar;
 
-    private Long createDate;
+    private Date createDate;
 
     private String email;
 
-    private Long lastLogin;
+    private Date lastLogin;
 
     private String mobilePhoneNumber;
 

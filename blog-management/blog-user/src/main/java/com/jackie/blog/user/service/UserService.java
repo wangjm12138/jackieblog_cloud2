@@ -3,6 +3,7 @@ package com.jackie.blog.user.service;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.user.dao.SysUserServiceMapper;
 import com.jackie.blog.user.entity.User;
+import com.jackie.blog.user.entity.conventor.UserConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,8 +45,7 @@ public class UserService {
         }
         userOperatorResponse.setSuccess(true);
         userOperatorResponse.setResponseCode("200");
-        userOperatorResponse.setUser();
-
+        userOperatorResponse.setUser(UserConvertor.INSTANCE.mapToVo(user));
         return userOperatorResponse;
     }
 

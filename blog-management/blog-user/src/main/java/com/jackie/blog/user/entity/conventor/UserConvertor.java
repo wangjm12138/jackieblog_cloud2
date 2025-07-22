@@ -1,10 +1,12 @@
 package com.jackie.blog.user.entity.conventor;
 
+import com.jackie.blog.api.user.response.data.BasicUserInfo;
+import com.jackie.blog.api.user.response.data.UserInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.factory.Mappers;
-
+import com.jackie.blog.user.entity.User;
 import java.util.List;
 
 /**
