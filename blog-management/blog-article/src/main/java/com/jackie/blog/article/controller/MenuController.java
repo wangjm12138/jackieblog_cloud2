@@ -17,7 +17,7 @@ import java.util.List;
  * @Date: 2024/12/13 20:55
  */
 @RestController
-@RequestMapping("api/menu")
+@RequestMapping("api/blog/menu")
 public class MenuController {
 
     @Autowired

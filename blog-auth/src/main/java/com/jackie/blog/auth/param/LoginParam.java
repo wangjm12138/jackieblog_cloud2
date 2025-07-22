@@ -4,6 +4,13 @@ import lombok.Data;
 
 @Data
 public class LoginParam extends RegisterParam {
+
+    private String loginType;
+
+    private String account;
+
+    private String password;
+
     /**
      * 记住我
      */

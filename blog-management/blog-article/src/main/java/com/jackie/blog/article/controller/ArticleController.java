@@ -23,7 +23,7 @@ import java.util.List;
  * @Date: 2023年02月19日 15:28
  */
 @RestController
-@RequestMapping("api/articles")
+@RequestMapping("api/blog/articles")
 public class ArticleController {
 
     @Autowired

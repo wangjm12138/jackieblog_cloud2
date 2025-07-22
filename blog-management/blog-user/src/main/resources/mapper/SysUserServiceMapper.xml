@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jackie.blog.user.dao.SysUserServiceMapper">
+    <resultMap id="userMap" type="com.jackie.blog.user.entity.User">
+        <id column="id" property="id" />
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="enabled" property="enabled"/>
+        <result column="lock_version" property="lockVersion"/>
+        <result column="avatar" property="avatar"/>
+        <result column="create_date" property="createDate"/>
+        <result column="deleted" property="deleted"/>
+        <result column="email" property="email"/>
+        <result column="last_login" property="lastLogin"/>
+        <result column="mobile_phone_number" property="mobilePhoneNumber"/>
+        <result column="nickname" property="nickname"/>
+        <result column="gender" property="gender"/>
+    </resultMap>
+
+    <select id="selectByPhone" resultType="userMap">
+        select * from jw_sys_user where mobile_phone_number=#{phone} LIMIT 1
+    </select>
+
+    <select id="selectByEmail" resultType="userMap">
+        select * from jw_sys_user where email=#{email} LIMIT 1
+    </select>
+
+    <select id="selectByUsername" resultType="userMap">
+        select * from jw_sys_user where username=#{username} LIMIT 1
+    </select>
+
+    <select id="loadUserByUsername" resultType="userMap">
+        select * from jw_sys_user where username=#{username}
+    </select>
+
+    <select id="getUserRolesById" resultType="userMap">
+        select * from jw_sys_role where id in (select rid from jw_sys_user_role where uid=#{id})
+    </select>
+</mapper>

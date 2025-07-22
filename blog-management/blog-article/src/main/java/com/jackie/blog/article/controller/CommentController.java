@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2023年02月19日 15:28
  */
 @RestController
-@RequestMapping("api/comment")
+@RequestMapping("api/blog/comment")
 public class CommentController {
 
 

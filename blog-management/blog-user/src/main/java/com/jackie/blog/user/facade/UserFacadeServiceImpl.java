@@ -1,5 +1,6 @@
 package com.jackie.blog.user.facade;
 
+import com.jackie.blog.api.user.request.UserQueryRequest;
 import com.jackie.blog.api.user.request.UserRegisterRequest;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.api.user.service.UserFacadeService;
@@ -21,5 +22,11 @@ public class UserFacadeServiceImpl implements UserFacadeService {
     @Facade
     public UserOperatorResponse register(UserRegisterRequest userRegisterRequest) {
         return userService.register(userRegisterRequest.getTelephone(), userRegisterRequest.getInviteCode());
+    }
+
+    @Override
+    @Facade
+    public UserOperatorResponse query(UserQueryRequest userQueryRequest) {
+        return userService.query(userQueryRequest.getAccount(), userQueryRequest.getPassword());
     }
 }

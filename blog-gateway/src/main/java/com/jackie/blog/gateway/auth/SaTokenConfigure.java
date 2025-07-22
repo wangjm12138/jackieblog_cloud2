@@ -1,12 +1,9 @@
 package com.jackie.blog.gateway.auth;
 
-import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.exception.NotPermissionException;
-import cn.dev33.satoken.exception.NotRoleException;
+
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
 import com.jackie.blog.api.user.constant.UserPermission;
 import com.jackie.blog.api.user.constant.UserRole;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +29,7 @@ public class SaTokenConfigure {
                 // 鉴权方法：每次访问进入
                 .setAuth(obj -> {
                     // 登录校验 -- 拦截所有路由，并排除/auth/login 用于开放登录
-                    SaRouter.match("/**").notMatch("/api/auth/**", "/api/collectionList", "/collection/collectionInfo", "/wxPay/**").check(r -> StpUtil.checkLogin());
+                    SaRouter.match("/**").notMatch("/api/auth/**", "/api/blog/**").check(r -> StpUtil.checkLogin());
 
                     // 权限认证 -- 不同模块, 校验不同权限
                     SaRouter.match("/admin/**", r -> StpUtil.checkRole(UserRole.ADMIN.name()));
@@ -67,5 +64,5 @@ public class SaTokenConfigure {
 //            default:
 //                return SaResult.error(throwable.getMessage());
 //        }
-    }
+//    }
 }

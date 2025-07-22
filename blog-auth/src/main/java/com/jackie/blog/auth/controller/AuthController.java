@@ -1,9 +1,12 @@
 package com.jackie.blog.auth.controller;
 
 
+import com.jackie.blog.api.user.request.UserQueryRequest;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.auth.exception.AuthException;
+import com.jackie.blog.auth.param.LoginParam;
 import com.jackie.blog.auth.param.RegisterParam;
+import com.jackie.blog.auth.vo.LoginVO;
 import com.jackie.blog.base.vo.Result;
 import jakarta.validation.Valid;
 
@@ -33,9 +36,21 @@ public class AuthController {
     private UserFacadeService userFacadeService;
 
     @PostMapping("/login")
-    public Result login(String username, String password) {
+    public Result login(@Valid @RequestBody LoginParam loginParam) {
 
+        String token;
+        if("password".equals(loginParam.getLoginType())) {
+            UserQueryRequest userQueryRequest = new UserQueryRequest();
+            userQueryRequest.setAccount(loginParam.getAccount());
+            userQueryRequest.setPassword(loginParam.getPassword());
+            UserOperatorResponse userOperatorResponse = userFacadeService.query(userQueryRequest);
+        } else if ("sms".equals(loginParam.getLoginType())) {
+            System.out.println("sms");
+        } else {
+            throw new AuthException(VERIFICATION_CODE_WRONG);
+        }
 
+        LoginVO loginVO = new LoginVO(userInfo);
         return Result.success("11");
 
     }
