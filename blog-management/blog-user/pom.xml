@@ -46,6 +46,14 @@
         </dependency>
         <dependency>
             <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
             <artifactId>blog-base</artifactId>
         </dependency>
         <dependency>

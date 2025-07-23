@@ -8,8 +8,8 @@ dubbo:
   registry:
     address: nacos://${jackie.blog.nacos.server.url}
     parameters:
-      namespace: ${nft.turbo.dubbo.nacos.namespace}
-      group: ${nft.turbo.dubbo.nacos.group}
+      namespace: ${jackie.blog.dubbo.nacos.namespace}
+      group: ${jackie.blog.dubbo.nacos.group}
   application:
     name: ${spring.application.name}
     qos-enable: true

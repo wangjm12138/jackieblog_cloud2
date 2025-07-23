@@ -8,7 +8,7 @@ import com.jackie.blog.user.entity.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface SysUserServiceMapper extends BaseMapper<User> {
+public interface UserServiceMapper extends BaseMapper<User> {
 
     Optional<User> selectByPhone(String phone);
     Optional<User> selectByEmail(String email);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jackie.blog.user.dao.SysUserServiceMapper">
+<mapper namespace="com.jackie.blog.user.dao.UserServiceMapper">
     <resultMap id="userMap" type="com.jackie.blog.user.entity.User">
         <id column="id" property="id" />
         <result column="username" property="username"/>
@@ -17,23 +17,23 @@
         <result column="gender" property="gender"/>
     </resultMap>
 
-    <select id="selectByPhone" resultType="userMap">
+    <select id="selectByPhone" resultMap="userMap">
         select * from jw_sys_user where mobile_phone_number=#{phone} LIMIT 1
     </select>
 
-    <select id="selectByEmail" resultType="userMap">
+    <select id="selectByEmail" resultMap="userMap">
         select * from jw_sys_user where email=#{email} LIMIT 1
     </select>
 
-    <select id="selectByUsername" resultType="userMap">
+    <select id="selectByUsername" resultMap="userMap">
         select * from jw_sys_user where username=#{username} LIMIT 1
     </select>
 
-    <select id="loadUserByUsername" resultType="userMap">
+    <select id="loadUserByUsername" resultMap="userMap">
         select * from jw_sys_user where username=#{username}
     </select>
 
-    <select id="getUserRolesById" resultType="userMap">
+    <select id="getUserRolesById" resultMap="userMap">
         select * from jw_sys_role where id in (select rid from jw_sys_user_role where uid=#{id})
     </select>
 </mapper>

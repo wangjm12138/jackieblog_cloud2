@@ -1,12 +1,10 @@
 package com.jackie.blog.user.service;
 
 import com.jackie.blog.api.user.response.UserOperatorResponse;
-import com.jackie.blog.user.dao.SysUserServiceMapper;
+import com.jackie.blog.user.dao.UserServiceMapper;
 import com.jackie.blog.user.entity.User;
 import com.jackie.blog.user.entity.conventor.UserConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,16 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // 自动加盐哈希
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(); // 自动加盐哈希
+//    }
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    SysUserServiceMapper userMapper;
+    UserServiceMapper userMapper;
 
 
     @Transactional
