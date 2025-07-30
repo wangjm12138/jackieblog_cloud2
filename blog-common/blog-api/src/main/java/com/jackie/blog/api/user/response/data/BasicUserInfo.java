@@ -27,7 +27,7 @@ public class BasicUserInfo implements Serializable {
     /**
      * 昵称
      */
-    private String nickName;
+    private String nickname;
 
     /**
      * 头像地址

@@ -21,9 +21,10 @@ public class LoginVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户标识，如用户ID
+     * 用户信息
      */
-    private String userId;
+
+    private UserInfo userInfo;
     /**
      * 访问令牌
      */
@@ -36,7 +37,7 @@ public class LoginVO implements Serializable {
 
 
     public LoginVO(UserInfo userInfo) {
-        this.userId = userInfo.getUserId().toString();
+        this.userInfo = userInfo;
         this.token = StpUtil.getTokenValue();
         this.tokenExpiration = StpUtil.getTokenSessionTimeout();
     }

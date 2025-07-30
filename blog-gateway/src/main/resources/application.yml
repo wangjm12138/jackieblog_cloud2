@@ -12,9 +12,9 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_UNIQUE
       routes:
         - id: article_route
-          uri: http://127.0.0.1:9081
+          uri: lb://blog-article
           predicates:
-            - Path=/api/**
+            - Path=/api/blog/**
         - id: blog-auth
           uri: lb://blog-auth
           predicates:

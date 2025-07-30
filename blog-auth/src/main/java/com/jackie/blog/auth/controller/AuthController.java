@@ -1,6 +1,8 @@
 package com.jackie.blog.auth.controller;
 
 
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
 import com.jackie.blog.api.user.request.UserQueryRequest;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.api.user.response.data.UserInfo;
@@ -24,8 +26,8 @@ import com.jackie.blog.api.user.service.UserFacadeService;
 
 import static com.jackie.blog.auth.exception.AuthErrorCode.VERIFICATION_CODE_WRONG;
 
-@RequestMapping("api/auth")
 @RestController
+@RequestMapping("api/auth")
 public class AuthController {
 
     @Autowired
@@ -36,9 +38,15 @@ public class AuthController {
     @DubboReference(version = "1.0.0")
     private UserFacadeService userFacadeService;
 
+    /**
+     * 默认登录超时时间：7天
+     */
+    private static final Integer DEFAULT_LOGIN_SESSION_TIMEOUT = 60 * 60 * 24 * 7;
+
+
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam) {
-
+        System.out.println("111111111");
         String token;
         UserInfo userInfo=null;
         if("password".equals(loginParam.getLoginType())) {
@@ -53,6 +61,10 @@ public class AuthController {
             throw new AuthException(VERIFICATION_CODE_WRONG);
         }
         assert userInfo != null;
+
+        StpUtil.login(userInfo.getUserId(), new SaLoginModel().setIsLastingCookie(loginParam.getRememberMe())
+                .setTimeout(DEFAULT_LOGIN_SESSION_TIMEOUT));
+        StpUtil.getSession().set(userInfo.getUserId().toString(), userInfo);
         LoginVO loginVO = new LoginVO(userInfo);
         return Result.success(loginVO);
 

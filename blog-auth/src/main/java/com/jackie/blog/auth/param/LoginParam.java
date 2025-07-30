@@ -3,7 +3,7 @@ package com.jackie.blog.auth.param;
 import lombok.Data;
 
 @Data
-public class LoginParam extends RegisterParam {
+public class LoginParam {
 
     private String loginType;
 
