@@ -32,6 +32,7 @@
         <module>blog-cache</module>
         <module>blog-sa-token</module>
         <module>blog-api</module>
+        <module>blog-web</module>
     </modules>
 
     <dependencies>

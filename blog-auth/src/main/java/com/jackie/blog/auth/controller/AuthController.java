@@ -1,6 +1,7 @@
 package com.jackie.blog.auth.controller;
 
 
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import com.jackie.blog.api.user.request.UserQueryRequest;
@@ -46,8 +47,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam) {
-        System.out.println("111111111");
-        String token;
         UserInfo userInfo=null;
         if("password".equals(loginParam.getLoginType())) {
             UserQueryRequest userQueryRequest = new UserQueryRequest();
@@ -58,12 +57,19 @@ public class AuthController {
         } else if ("sms".equals(loginParam.getLoginType())) {
             System.out.println("sms");
         } else {
+            System.out.println("exception");
+
             throw new AuthException(VERIFICATION_CODE_WRONG);
         }
         assert userInfo != null;
 
-        StpUtil.login(userInfo.getUserId(), new SaLoginModel().setIsLastingCookie(loginParam.getRememberMe())
-                .setTimeout(DEFAULT_LOGIN_SESSION_TIMEOUT));
+        SaLoginModel saLoginModel = new SaLoginModel();
+        saLoginModel.setTimeout(DEFAULT_LOGIN_SESSION_TIMEOUT);
+        saLoginModel.setIsLastingCookie(loginParam.getRememberMe());
+        StpUtil.login(userInfo.getUserId(), saLoginModel);
+        // 设置token-session会话过期时间，按理说是和token一样过期时间，但是这里不知道不一致
+        SaSession tokenSession = StpUtil.getTokenSession();
+        tokenSession.updateTimeout(saLoginModel.getTimeout());
         StpUtil.getSession().set(userInfo.getUserId().toString(), userInfo);
         LoginVO loginVO = new LoginVO(userInfo);
         return Result.success(loginVO);
