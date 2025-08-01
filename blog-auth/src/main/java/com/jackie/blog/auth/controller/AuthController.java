@@ -11,17 +11,19 @@ import com.jackie.blog.auth.exception.AuthException;
 import com.jackie.blog.auth.param.LoginParam;
 import com.jackie.blog.auth.param.RegisterParam;
 import com.jackie.blog.auth.vo.LoginVO;
+import com.jackie.blog.base.exception.SystemException;
+import com.jackie.blog.base.validator.IsMobile;
 import com.jackie.blog.base.vo.Result;
 import jakarta.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.rpc.RpcException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.jackie.blog.api.user.request.UserRegisterRequest;
 import com.jackie.blog.api.user.service.UserFacadeService;
 
@@ -31,6 +33,7 @@ import static com.jackie.blog.auth.exception.AuthErrorCode.VERIFICATION_CODE_WRO
 @RequestMapping("api/auth")
 public class AuthController {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -44,7 +47,20 @@ public class AuthController {
      */
     private static final Integer DEFAULT_LOGIN_SESSION_TIMEOUT = 60 * 60 * 24 * 7;
 
-
+    @GetMapping("/sendCaptcha")
+    public Result<Boolean> sendCaptcha(String telephone) {
+//        NoticeResponse noticeResponse = noticeFacadeService.generateAndSendSmsCaptcha(telephone);
+        System.out.println(1111111);
+        try {
+            UserOperatorResponse userOperatorResponse = userFacadeService.test();
+        } catch (SystemException e) {
+            log.error("");
+        } catch (RpcException e) {
+            log.error("11");
+        }
+        System.out.println(222222);
+        return Result.success(true);
+    }
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam) {
         UserInfo userInfo=null;
@@ -76,7 +92,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public Result register(@Valid @RequestBody RegisterParam registerParam) {
 
         //验证码校验
@@ -94,5 +110,11 @@ public class AuthController {
 
         return Result.success("11");
 
+    }
+
+    @PostMapping("/logout")
+    public Result<Boolean> logout(){
+        StpUtil.logout();
+        return Result.success(true);
     }
 }
