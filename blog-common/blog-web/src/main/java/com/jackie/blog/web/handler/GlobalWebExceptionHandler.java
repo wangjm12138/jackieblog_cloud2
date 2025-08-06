@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class GlobalWebExceptionHandler {
 
-
-
     /**
      * 自定义业务异常处理器
      *
@@ -49,6 +47,7 @@ public class GlobalWebExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Result systemExceptionHandler(SystemException systemException) {
+        log.error("systemException occurred.1111111111111111111111", systemException);
         log.error("systemException occurred.", systemException);
         Result result = new Result();
         result.setCode(systemException.getErrorCode().getCode());

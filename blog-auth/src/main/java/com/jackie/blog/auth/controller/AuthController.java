@@ -54,11 +54,16 @@ public class AuthController {
         try {
             UserOperatorResponse userOperatorResponse = userFacadeService.test();
         } catch (SystemException e) {
-            log.error("");
+            System.out.println("SystemException");
         } catch (RpcException e) {
-            log.error("11");
+            System.out.println("RpcException");
+//            if (e.getCause() instanceof SystemException) {
+//                System.out.println("SystemException in RuntimeException");
+//                SystemException se = (SystemException) e.getCause();
+//            }
         }
         System.out.println(222222);
+        System.out.println(1111111);
         return Result.success(true);
     }
     @PostMapping("/login")

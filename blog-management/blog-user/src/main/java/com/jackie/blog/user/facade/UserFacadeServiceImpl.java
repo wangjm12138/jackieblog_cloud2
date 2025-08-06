@@ -1,5 +1,6 @@
 package com.jackie.blog.user.facade;
 
+import cn.hutool.core.lang.Assert;
 import com.jackie.blog.api.user.request.UserQueryRequest;
 import com.jackie.blog.api.user.request.UserRegisterRequest;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
@@ -34,12 +35,12 @@ public class UserFacadeServiceImpl implements UserFacadeService {
     }
 
     @Override
-    @Facade
+//    @Facade
     public UserOperatorResponse test() {
         UserOperatorResponse userOperatorResponse = new UserOperatorResponse();
-        userOperatorResponse.setSuccess(true);
+//        userOperatorResponse.setSuccess(true);
+        System.out.println(111111111);
         throw new SystemException(SEND_NOTICE_DUPLICATED);
-
 //        return userOperatorResponse;
     }
 

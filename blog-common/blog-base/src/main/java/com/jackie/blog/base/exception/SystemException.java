@@ -1,12 +1,13 @@
 package com.jackie.blog.base.exception;
 
+import java.io.Serializable;
+
 /**
  * 系统异常
  *
  * @author jackie wang
  */
 public class SystemException extends RuntimeException {
-
     private ErrorCode errorCode;
 
     public SystemException(ErrorCode errorCode) {

@@ -3,6 +3,7 @@ package com.jackie.blog.api.user.service;
 import com.jackie.blog.api.user.request.*;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.api.user.response.data.UserInfo;
+import com.jackie.blog.base.exception.SystemException;
 
 /**
  * @author jackie wang
@@ -24,6 +25,7 @@ public interface UserFacadeService {
     UserOperatorResponse register(UserRegisterRequest userRegisterRequest);
 
 
+//    UserOperatorResponse test() throws SystemException;
     UserOperatorResponse test();
 
 }

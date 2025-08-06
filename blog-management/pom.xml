@@ -27,6 +27,7 @@
     <modules>
         <module>blog-user</module>
         <module>blog-article</module>
+        <module>blog-mail</module>
     </modules>
 
 </project>

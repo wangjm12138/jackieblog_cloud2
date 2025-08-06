@@ -12,6 +12,11 @@ logging:
   level:
     cn.dev33.satoken.dao.redis: debug
 
+dubbo:
+  consumer:
+    retries: 0
+
+
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: satoken
