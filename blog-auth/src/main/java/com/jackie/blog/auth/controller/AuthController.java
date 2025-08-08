@@ -47,25 +47,13 @@ public class AuthController {
      */
     private static final Integer DEFAULT_LOGIN_SESSION_TIMEOUT = 60 * 60 * 24 * 7;
 
-    @GetMapping("/sendCaptcha")
-    public Result<Boolean> sendCaptcha(String telephone) {
+//    @GetMapping("/sendCaptcha")
+//    public Result<Boolean> sendCaptcha(String telephone) {
 //        NoticeResponse noticeResponse = noticeFacadeService.generateAndSendSmsCaptcha(telephone);
-        System.out.println(1111111);
-        try {
-            UserOperatorResponse userOperatorResponse = userFacadeService.test();
-        } catch (SystemException e) {
-            System.out.println("SystemException");
-        } catch (RpcException e) {
-            System.out.println("RpcException");
-//            if (e.getCause() instanceof SystemException) {
-//                System.out.println("SystemException in RuntimeException");
-//                SystemException se = (SystemException) e.getCause();
-//            }
-        }
-        System.out.println(222222);
-        System.out.println(1111111);
-        return Result.success(true);
-    }
+//
+//        }
+//        return Result.success(true);
+//    }
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam) {
         UserInfo userInfo=null;
@@ -100,16 +88,11 @@ public class AuthController {
     @PostMapping("/register")
     public Result register(@Valid @RequestBody RegisterParam registerParam) {
 
-        //验证码校验
-        String cacheCode = stringRedisTemplate.opsForValue().get(registerParam.getTelephone());
-        if(!StringUtils.equalsIgnoreCase(cacheCode, registerParam.getCaptcha())){
-            throw new AuthException(VERIFICATION_CODE_WRONG);
-        }
 
         //注册
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
-        userRegisterRequest.setTelephone(registerParam.getTelephone());
-        userRegisterRequest.setInviteCode(registerParam.getInviteCode());
+        userRegisterRequest.setUsername(registerParam.getUsername());
+        userRegisterRequest.setPassword(registerParam.getPassword());
 
         UserOperatorResponse register = userFacadeService.register(userRegisterRequest);
 

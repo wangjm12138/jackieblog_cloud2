@@ -9,6 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.Optional;
+
+import static com.jackie.blog.user.exception.UserErrorCode.NAME_EXIST;
+import static com.jackie.blog.user.exception.UserErrorCode.USER_CREATE_FAIL;
+
 @Service
 public class UserService {
 
@@ -33,7 +39,7 @@ public class UserService {
                 .or(() -> userMapper.selectByEmail(account))
                 .or(() -> userMapper.selectByUsername(account))
                 .orElseThrow(() -> {
-                    userOperatorResponse.setResponseCode("200");
+                    userOperatorResponse.setResponseCode("ok");
                     return null;
                 });
 
@@ -42,16 +48,39 @@ public class UserService {
 //            throw new Exception("密码错误");
         }
         userOperatorResponse.setSuccess(true);
-        userOperatorResponse.setResponseCode("200");
+        userOperatorResponse.setResponseCode("ok");
         userOperatorResponse.setUser(UserConvertor.INSTANCE.mapToVo(user));
         return userOperatorResponse;
     }
 
     @Transactional
-    public UserOperatorResponse register(String telephone, String inviteCode) {
-
+    public UserOperatorResponse register(String username, String password) {
         UserOperatorResponse userOperatorResponse = new UserOperatorResponse();
+
+        Optional<User> existUser = userMapper.selectByUsername(username);
+        if (existUser.isPresent()) {
+            userOperatorResponse.setSuccess(false);
+            userOperatorResponse.setResponseCode(NAME_EXIST.getCode());
+            userOperatorResponse.setResponseMessage(NAME_EXIST.getMessage());
+            return userOperatorResponse;
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEnabled(true);
+        user.setCreateDate(new Date());
+        int insert = userMapper.insert(user);
+        if (insert != 1) {
+            userOperatorResponse.setSuccess(false);
+            userOperatorResponse.setResponseCode(USER_CREATE_FAIL.getCode());
+            userOperatorResponse.setResponseMessage(USER_CREATE_FAIL.getMessage());
+            return userOperatorResponse;
+        }
+
         userOperatorResponse.setSuccess(true);
+        userOperatorResponse.setResponseCode("ok");
+        userOperatorResponse.setUser(UserConvertor.INSTANCE.mapToVo(user));
 
         return userOperatorResponse;
     }

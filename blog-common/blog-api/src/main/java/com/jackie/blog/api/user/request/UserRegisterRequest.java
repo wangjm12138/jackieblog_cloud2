@@ -13,9 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 public class UserRegisterRequest extends BaseRequest {
 
-    private String telephone;
-
-    private String inviteCode;
+    private String username;
 
     private String password;
 

@@ -1,6 +1,5 @@
 package com.jackie.blog.auth.param;
 
-import com.jackie.blog.base.validator.IsMobile;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -8,19 +7,19 @@ import lombok.Data;
 public class RegisterParam {
 
     /**
-     * 手机号
+     * 用户名
      */
-    @IsMobile
-    private String telephone;
+    private String username;
 
     /**
-     * 验证码
+     * 密码确认
      */
-    @NotBlank(message = "验证码不能为空")
-    private String captcha;
+    @NotBlank(message = "密码不能为空")
+    private String password;
 
     /**
-     * 邀请码
+     * 密码确认
      */
-    private String inviteCode;
+    @NotBlank(message = "密码不能为空")
+    private String confirmPassword;
 }

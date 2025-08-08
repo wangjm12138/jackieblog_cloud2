@@ -48,11 +48,11 @@ public enum UserErrorCode implements ErrorCode {
     /**
      * 用户名已存在
      */
-    NICK_NAME_EXIST("NICK_NAME_EXIST", "用户名已存在"),
+    NAME_EXIST("NAME_EXIST", "用户名已存在"),
     /**
      * 用户创建链账号失败
      */
-    USER_CREATE_CHAIN_FAIL("USER_CREATE_CHAIN_FAIL", "用户创建链账号失败"),
+    USER_CREATE_FAIL("USER_CREATE_FAIL", "用户创建账号失败"),
     /**
      * 用户状态不能进行激活
      */

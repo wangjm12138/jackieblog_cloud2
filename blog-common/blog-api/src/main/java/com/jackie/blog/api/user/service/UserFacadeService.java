@@ -25,7 +25,7 @@ public interface UserFacadeService {
     UserOperatorResponse register(UserRegisterRequest userRegisterRequest);
 
 
-//    UserOperatorResponse test() throws SystemException;
-    UserOperatorResponse test();
+    UserOperatorResponse test() throws SystemException;
+    //UserOperatorResponse test();
 
 }
