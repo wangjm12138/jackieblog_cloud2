@@ -49,6 +49,11 @@ public enum UserErrorCode implements ErrorCode {
      * 用户名已存在
      */
     NAME_EXIST("NAME_EXIST", "用户名已存在"),
+
+    /**
+     * 用户名已存在
+     */
+    PASS_ERROR("PASS_ERROR", "密码错误"),
     /**
      * 用户创建链账号失败
      */

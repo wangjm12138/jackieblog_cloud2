@@ -11,7 +11,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class SysRole {
+public class UserRole {
     private Long id;
     private String name;
     private String nameZH;

@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.Optional;
 
-import static com.jackie.blog.user.exception.UserErrorCode.NAME_EXIST;
-import static com.jackie.blog.user.exception.UserErrorCode.USER_CREATE_FAIL;
+import static com.jackie.blog.user.exception.UserErrorCode.*;
 
 @Service
 public class UserService {
@@ -31,21 +30,28 @@ public class UserService {
 
 
     @Transactional
-    public UserOperatorResponse query(String account, String password) {
+    public User findUserId(Long userId) {
+        // 1. 根据账号查询用户（手机号/邮箱/用户名）
+        return userMapper.selectById(userId);
+    }
+
+    @Transactional
+    public User findAccountPass(String account, String password) {
+        // 1. 根据账号查询用户（手机号/邮箱/用户名）
+        return userMapper.selectByUsername(account);
+    }
+
+    @Transactional
+    public UserOperatorResponse findUserIdWrap(Long userId) {
         UserOperatorResponse userOperatorResponse = new UserOperatorResponse();
 
         // 1. 根据账号查询用户（手机号/邮箱/用户名）
-        User user = userMapper.selectByPhone(account)
-                .or(() -> userMapper.selectByEmail(account))
-                .or(() -> userMapper.selectByUsername(account))
-                .orElseThrow(() -> {
-                    userOperatorResponse.setResponseCode("ok");
-                    return null;
-                });
-
-        // 2. 校验密码（实际项目需加密比对）
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-//            throw new Exception("密码错误");
+        User user = this.findUserId(userId);
+        if (user == null) {
+            userOperatorResponse.setSuccess(false);
+            userOperatorResponse.setResponseCode(USER_NOT_EXIST.getCode());
+            userOperatorResponse.setResponseMessage(USER_NOT_EXIST.getMessage());
+            return userOperatorResponse;
         }
         userOperatorResponse.setSuccess(true);
         userOperatorResponse.setResponseCode("ok");
@@ -54,11 +60,37 @@ public class UserService {
     }
 
     @Transactional
+    public UserOperatorResponse findAccountPassWrap(String account, String password) {
+        UserOperatorResponse userOperatorResponse = new UserOperatorResponse();
+
+        User user = this.findAccountPass(account, password);
+        System.out.println(user);
+        if (user == null) {
+            userOperatorResponse.setSuccess(false);
+            userOperatorResponse.setResponseCode(USER_NOT_EXIST.getCode());
+            userOperatorResponse.setResponseMessage(USER_NOT_EXIST.getMessage());
+            return userOperatorResponse;
+        } else {
+            // 2. 校验密码（实际项目需加密比对）
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                userOperatorResponse.setResponseCode(PASS_ERROR.getCode());
+                userOperatorResponse.setResponseMessage(PASS_ERROR.getMessage());
+                return userOperatorResponse;
+            }
+        }
+        userOperatorResponse.setSuccess(true);
+        userOperatorResponse.setResponseCode("ok");
+        userOperatorResponse.setUser(UserConvertor.INSTANCE.mapToVo(user));
+        System.out.println(userOperatorResponse);
+        return userOperatorResponse;
+    }
+
+    @Transactional
     public UserOperatorResponse register(String username, String password) {
         UserOperatorResponse userOperatorResponse = new UserOperatorResponse();
 
-        Optional<User> existUser = userMapper.selectByUsername(username);
-        if (existUser.isPresent()) {
+        User existUser = userMapper.selectByUsername(username);
+        if (existUser!=null) {
             userOperatorResponse.setSuccess(false);
             userOperatorResponse.setResponseCode(NAME_EXIST.getCode());
             userOperatorResponse.setResponseMessage(NAME_EXIST.getMessage());

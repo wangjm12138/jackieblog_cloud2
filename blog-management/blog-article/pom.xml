@@ -23,8 +23,8 @@
 
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -40,12 +40,22 @@
             <groupId>com.jackie.blog</groupId>
             <artifactId>blog-base</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.jackie.blog</groupId>
             <artifactId>blog-cache</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-rpc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jackie.blog</groupId>
+            <artifactId>blog-user</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.jackie.blog</groupId>
             <artifactId>blog-config</artifactId>

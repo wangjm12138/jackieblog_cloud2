@@ -17,9 +17,4 @@ public class RegisterParam {
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    /**
-     * 密码确认
-     */
-    @NotBlank(message = "密码不能为空")
-    private String confirmPassword;
 }

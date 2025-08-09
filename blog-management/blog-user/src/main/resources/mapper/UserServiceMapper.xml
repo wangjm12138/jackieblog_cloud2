@@ -17,23 +17,26 @@
         <result column="gender" property="gender"/>
     </resultMap>
 
+    <select id="selectById" resultMap="userMap">
+        select * from jw_user where id=#{id} LIMIT 1
+    </select>
     <select id="selectByPhone" resultMap="userMap">
-        select * from jw_sys_user where mobile_phone_number=#{phone} LIMIT 1
+        select * from jw_user where mobile_phone_number=#{phone} LIMIT 1
     </select>
 
     <select id="selectByEmail" resultMap="userMap">
-        select * from jw_sys_user where email=#{email} LIMIT 1
+        select * from jw_user where email=#{email} LIMIT 1
     </select>
 
     <select id="selectByUsername" resultMap="userMap">
-        select * from jw_sys_user where username=#{username} LIMIT 1
+        select * from jw_user where username=#{username} LIMIT 1
     </select>
 
     <select id="loadUserByUsername" resultMap="userMap">
-        select * from jw_sys_user where username=#{username}
+        select * from jw_user where username=#{username}
     </select>
 
     <select id="getUserRolesById" resultMap="userMap">
-        select * from jw_sys_role where id in (select rid from jw_sys_user_role where uid=#{id})
+        select * from jw_role where id in (select rid from jw_user_role where uid=#{id})
     </select>
 </mapper>

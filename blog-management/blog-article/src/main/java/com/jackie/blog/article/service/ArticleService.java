@@ -37,40 +37,26 @@ public class ArticleService {
     @Autowired
     private ArticleServiceMapper articleServiceMapper;
 
-    @Autowired
-    private CategoryServiceMapper categoryServiceMapper;
-
-    @Autowired
-    private TagService tagService;
-
-    @Autowired
-    private SysUserService sysUserService;
-
 //    @Autowired
-//    private StringRedisTemplate redisTemplate;
+//    private CategoryServiceMapper categoryServiceMapper;
+//
 //    @Autowired
-//    private StringRedisTemplate redisTemplate;
+//    private TagService tagService;
 
 
     public Result<List<ArticleVo>> listArticleTop() {
         List<Article> records = articleServiceMapper.listArticleTop();
         System.out.println(records);
-        List<ArticleVo> articleVoList = new ArrayList<>();
+        List<ArticleVo> articleVoList;
         articleVoList = ArticleConvertor.INSTANCE.mapToVo(records);
-//        for (Article record : records) {
-//            articleVoList.add(copy(record));
-//        }
-
         return Result.success(articleVoList);
     }
 
     public Result<List<ArticleVo>> listArticleRecent() {
         List<Article> records = articleServiceMapper.listArticleRecent();
-        List<ArticleVo> articleVoList = new ArrayList<>();
+        List<ArticleVo> articleVoList;
         articleVoList = ArticleConvertor.INSTANCE.mapToVo(records);
-//        for (Article record : records) {
-//            articleVoList.add(copy(record));
-//        }
+
         return Result.success(articleVoList);
     }
 
