@@ -6,12 +6,14 @@ import com.jackie.blog.api.user.request.UserQueryRequest;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.api.user.response.data.UserInfo;
 import com.jackie.blog.api.user.service.UserFacadeService;
+import com.jackie.blog.article.param.CommentParam;
 import com.jackie.blog.article.vo.CommentTreeVo;
 import com.jackie.blog.article.dao.CommentServiceMapper;
 import com.jackie.blog.article.dto.CommentNodeDTO;
 import com.jackie.blog.article.dto.CommentTreeDTO;
 import com.jackie.blog.article.entity.convertor.CommentConvertor;
 import com.jackie.blog.base.response.PageResponse;
+import com.jackie.blog.base.vo.Result;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,5 +88,9 @@ public class CommentService {
             commentTreeDTOPageResponse = PageResponse.of(rootCommentTree, commentNodeDTOIPage.getTotal(), commentNodeDTOIPage.getSize(), commentNodeDTOIPage.getCurrent(), commentNodeDTOIPage.getPages(), false);
         }
         return PageResponse.of(CommentConvertor.INSTANCE.mapToVo(commentTreeDTOPageResponse.getDatas()),commentTreeDTOPageResponse.getTotal(), commentTreeDTOPageResponse.getPageSize(), commentTreeDTOPageResponse.getCurrentPage(), commentTreeDTOPageResponse.getTotalPage(), commentTreeDTOPageResponse.isLast());
+    }
+
+    public Result pushCommentByArticle(CommentParam commentParam){
+        return Result.success(null);
     }
 }
