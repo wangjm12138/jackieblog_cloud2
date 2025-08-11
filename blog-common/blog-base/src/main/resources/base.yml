@@ -30,7 +30,7 @@ jackie:
 #      url: 127.0.0.1:9876 # nft.turbo.rocketmq.url - RocketMQ 的地址+端口号 # 如果你要用RocketMQ，这里需要改成你自己的
     dubbo:
       nacos:
-        namespace: 11e5e24e-add7-4484-af45-0db1904593a3  # nft.turbo.dubbo.nacos.namespace - 自己到nacos上创建一个给dubbo用的namespce，然后和这里保持一致，首次启动前务必修改成你自己的 #首次启动前务必修改成你自己的
+        namespace: 4cb3eb0d-4be4-4dbd-8887-fdf2cfc8cd01  # nft.turbo.dubbo.nacos.namespace - 自己到nacos上创建一个给dubbo用的namespce，然后和这里保持一致，首次启动前务必修改成你自己的 #首次启动前务必修改成你自己的
         group: dubbo1  # jackie.blog.dubbo.nacos.group - 自己到nacos上创建一个给dubbo用的 group，然后和这里保持一致，首次启动前务必修改成你自己的 #首次启动前务必修改成你自己的
 #    seata:
 #      nacos:

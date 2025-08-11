@@ -33,6 +33,7 @@ spring:
 mybatis-plus:
   global-config:
     db-config:
+      id-type: auto  # 使用数据库自增,如果其他微服务需要雪花算法，可以在其他微服务的实体类用注释使用雪花算法
       table-prefix: jw_
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

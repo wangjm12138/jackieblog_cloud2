@@ -2,8 +2,10 @@ package com.jackie.blog.article.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jackie.blog.api.user.request.UserQueryRequest;
+import com.jackie.blog.api.user.response.UserOperatorResponse;
+import com.jackie.blog.api.user.response.data.UserInfo;
 import com.jackie.blog.api.user.service.UserFacadeService;
-import com.jackie.blog.article.entity.SysUser;
 import com.jackie.blog.article.vo.CommentTreeVo;
 import com.jackie.blog.article.dao.CommentServiceMapper;
 import com.jackie.blog.article.dto.CommentNodeDTO;
@@ -22,24 +24,28 @@ import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
-    @Autowired
-    private SysUserService sysUserService;
+
+    @DubboReference(version = "1.0.0")
+    private UserFacadeService userFacadeService;
 
     @Autowired
     private CommentServiceMapper commentServiceMapper;
 
     private CommentTreeDTO convertToDTO(CommentNodeDTO commentNodeDTO) {
         CommentTreeDTO commentTreeDTO = new CommentTreeDTO();
-        SysUser user = sysUserService.findUserById(commentNodeDTO.getUserId());
+        UserQueryRequest userQueryRequest = new UserQueryRequest(commentNodeDTO.getUserId());
+        UserOperatorResponse userOperatorResponse = userFacadeService.query(userQueryRequest);
+        UserInfo userInfo = userOperatorResponse.getUser();
+
         commentTreeDTO.setId(commentNodeDTO.getId());
         commentTreeDTO.setContent(commentNodeDTO.getContent());
         commentTreeDTO.setArticleId(commentNodeDTO.getArticleId());
         commentTreeDTO.setCreateDate(commentNodeDTO.getCreateDate());
         commentTreeDTO.setUpdateDate(commentNodeDTO.getUpdateDate());
         commentTreeDTO.setUserId(commentNodeDTO.getUserId());
-        commentTreeDTO.setNickname(user.getNickname());
-        commentTreeDTO.setAvatar(user.getAvatar());
-        commentTreeDTO.setGender(user.getGender());
+        commentTreeDTO.setNickname(userInfo.getNickname());
+        commentTreeDTO.setAvatar(userInfo.getAvatar());
+        commentTreeDTO.setGender(userInfo.getGender());
         commentTreeDTO.setDepth(commentNodeDTO.getDepth());
         commentTreeDTO.setTreeRoot(commentNodeDTO.getTreeRoot());
         return commentTreeDTO;

@@ -11,14 +11,10 @@ import com.jackie.blog.auth.exception.AuthException;
 import com.jackie.blog.auth.param.LoginParam;
 import com.jackie.blog.auth.param.RegisterParam;
 import com.jackie.blog.auth.vo.LoginVO;
-import com.jackie.blog.base.exception.SystemException;
-import com.jackie.blog.base.validator.IsMobile;
 import com.jackie.blog.base.vo.Result;
 import jakarta.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

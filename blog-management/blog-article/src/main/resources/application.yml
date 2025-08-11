@@ -3,7 +3,7 @@ spring:
     name: blog-article
 
   config:
-    import: classpath:base.yml,classpath:config.yml,classpath:datasource.yml,classpath:cache.yml
+    import: classpath:base.yml,classpath:config.yml,classpath:datasource.yml,classpath:cache.yml,classpath:rpc.yml
 # 应用服务 WEB 访问端口
 server:
   port: 9081
