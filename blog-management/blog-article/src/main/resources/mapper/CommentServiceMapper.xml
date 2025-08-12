@@ -20,5 +20,14 @@
 
     </select>
 
+    <insert id="pushCommentByArticle" parameterType="com.jackie.blog.article.entity.Comment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO jw_comment(content, create_date, article_id, user_id, update_date) VALUES (#{content},#{createDate},#{articleId},#{userId},#{updateDate})
+
+    </insert>
+
+    <insert id="pushCommentRelation" parameterType="com.jackie.blog.article.entity.CommentRelation">
+        INSERT INTO jw_comment_relations(ancestor,descendant,depth) VALUES (#{ancestor},#{descendant},#{depth})
+
+    </insert>
 
 </mapper>

@@ -6,23 +6,31 @@ import com.jackie.blog.api.user.request.UserQueryRequest;
 import com.jackie.blog.api.user.response.UserOperatorResponse;
 import com.jackie.blog.api.user.response.data.UserInfo;
 import com.jackie.blog.api.user.service.UserFacadeService;
+import com.jackie.blog.article.entity.Comment;
+import com.jackie.blog.article.entity.CommentRelation;
 import com.jackie.blog.article.param.CommentParam;
 import com.jackie.blog.article.vo.CommentTreeVo;
 import com.jackie.blog.article.dao.CommentServiceMapper;
 import com.jackie.blog.article.dto.CommentNodeDTO;
 import com.jackie.blog.article.dto.CommentTreeDTO;
 import com.jackie.blog.article.entity.convertor.CommentConvertor;
+import com.jackie.blog.article.vo.CommentVo;
 import com.jackie.blog.base.response.PageResponse;
 import com.jackie.blog.base.vo.Result;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.jackie.blog.article.exception.CommentErrorCode.COMMENT_INSERT_COMMENT_ERROR;
+import static com.jackie.blog.article.exception.CommentErrorCode.COMMENT_USER_NOT_EXIST;
 
 @Service
 public class CommentService {
@@ -90,7 +98,41 @@ public class CommentService {
         return PageResponse.of(CommentConvertor.INSTANCE.mapToVo(commentTreeDTOPageResponse.getDatas()),commentTreeDTOPageResponse.getTotal(), commentTreeDTOPageResponse.getPageSize(), commentTreeDTOPageResponse.getCurrentPage(), commentTreeDTOPageResponse.getTotalPage(), commentTreeDTOPageResponse.isLast());
     }
 
+    @Transactional
     public Result pushCommentByArticle(CommentParam commentParam){
-        return Result.success(null);
+        UserQueryRequest userQueryRequest = new UserQueryRequest(commentParam.getUserId());
+        UserOperatorResponse userOperatorResponse = userFacadeService.query(userQueryRequest);
+        UserInfo userInfo = userOperatorResponse.getUser();
+        if (userInfo == null) {
+            return Result.fail(COMMENT_USER_NOT_EXIST.getCode(),COMMENT_USER_NOT_EXIST.getMessage());
+        }
+        Comment comment = new Comment();
+        Date currentTime = new Date();
+        comment.setUserId(commentParam.getUserId());
+        comment.setArticleId(commentParam.getArticleId());
+        comment.setContent(commentParam.getContent());
+        comment.setCreateDate(currentTime);
+        comment.setUpdateDate(currentTime);
+        int insertComment = commentServiceMapper.pushCommentByArticle(comment);
+        if(insertComment > 0){
+            CommentRelation commentRelation = new CommentRelation();
+            commentRelation.setAncestor(comment.getId());
+            commentRelation.setDescendant(comment.getId());
+            commentRelation.setDepth(0);
+            int insertRelation = commentServiceMapper.pushCommentRelation(commentRelation);
+            CommentVo commentVo = new CommentVo();
+            commentVo.setId(comment.getId());
+            commentVo.setArticleId(commentParam.getArticleId());
+            commentVo.setContent(commentParam.getContent());
+            commentVo.setCreateDate(currentTime);
+            commentVo.setUpdateDate(currentTime);
+            commentVo.setGender(userInfo.getGender());
+            commentVo.setNickname(userInfo.getNickname());
+            commentVo.setAvatar(userInfo.getAvatar());
+            if(insertRelation > 0){
+                return Result.success(commentVo);
+            }
+        }
+        return Result.fail(COMMENT_INSERT_COMMENT_ERROR.getCode(),COMMENT_INSERT_COMMENT_ERROR.getMessage());
     }
 }

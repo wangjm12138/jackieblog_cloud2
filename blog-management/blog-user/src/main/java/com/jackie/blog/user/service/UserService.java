@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.jackie.blog.user.exception.UserErrorCode.*;
 
@@ -98,10 +99,16 @@ public class UserService {
         }
 
         User user = new User();
+        UUID uuid = UUID.randomUUID();
         user.setUsername(username);
+        user.setNickname("用户"+uuid.toString().substring(0,8));
         user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(true);
+        user.setGender(Math.random()>0.5?1:0);
         user.setCreateDate(new Date());
+        user.setLastLogin(new Date());
+        user.setLockVersion(0);
+        user.setDeleted(0);
         int insert = userMapper.insert(user);
         if (insert != 1) {
             userOperatorResponse.setSuccess(false);

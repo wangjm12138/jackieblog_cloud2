@@ -15,7 +15,7 @@ public class Comment extends BaseEntity {
 
     private String content;
 
-    private Date createTime;
+    private Date createDate;
 
-    private Date updateTime;
+    private Date updateDate;
 }

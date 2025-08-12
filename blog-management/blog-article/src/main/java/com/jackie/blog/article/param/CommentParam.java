@@ -9,5 +9,4 @@ public class CommentParam {
     private Long userId;
     private String nickname;
     private String content;
-    private String createDate;
 }

@@ -29,12 +29,12 @@ public class CommentController {
 
 
     @GetMapping("/{articleId}")
-    public MultiResult<CommentTreeVo> listArticleComment(@PathVariable("articleId") Long articleId, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer limit) {
+    public MultiResult<CommentTreeVo> listArticleComment(@PathVariable("articleId") Long articleId, @RequestParam(name="page", required = false, defaultValue = "1") Integer page, @RequestParam(name="limit",required = false, defaultValue = "10") Integer limit) {
         PageResponse<CommentTreeVo> pageResponse =  commentService.listCommentByArticle(articleId, page, limit);
         return MultiResultConvertor.convert(pageResponse);
     }
 
-    @PostMapping("/{articleId}")
+    @PostMapping()
     public Result pushArticleComment(@RequestBody CommentParam commentParam) {
         return  commentService.pushCommentByArticle(commentParam);
     }

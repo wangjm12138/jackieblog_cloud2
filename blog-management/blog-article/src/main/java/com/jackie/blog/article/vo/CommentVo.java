@@ -2,23 +2,24 @@ package com.jackie.blog.article.vo;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
 public class CommentVo  {
-    //防止前端 精度损失 把id转为string
-//    @JsonSerialize(using = ToStringSerializer.class)
-    private String id;
+    private Long id;
 
-    private UserVo author;
+    private Long articleId;
+
+    private String nickname;
+
+    private String avatar;
+
+    private int gender;
 
     private String content;
 
-    private List<CommentVo> childrens;
+    private Date createDate;
 
-    private String createDate;
-
-    private Integer level;
-
-    private UserVo toUser;
+    private Date updateDate;
 }
