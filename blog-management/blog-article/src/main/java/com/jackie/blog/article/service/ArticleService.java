@@ -59,10 +59,10 @@ public class ArticleService {
 
         return Result.success(articleVoList);
     }
-
+    //JetCache的@Cached注解基于AOP实现SpEL表达式依赖这个-parameter编译，所以maven要加入这个编译或者intelij idea加入
     @Cached(
             name = ":articleList:", // 缓存前缀
-            key = "#pageParams.page + ':' + #pageParams.pageSize + ':' + #pageParams.menuId + ':' + #pageParams.cateId + ':' + #pageParams.cateDetailsId", // 组合 Key
+            key = "#pageParams.toString()", // 组合 Key
             expire = 60, // 缓存 60 秒
             timeUnit = TimeUnit.MINUTES,
             cacheType = CacheType.REMOTE // 本地 + 远程缓存

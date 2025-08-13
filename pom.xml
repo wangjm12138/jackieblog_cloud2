@@ -126,6 +126,10 @@
                     <source>21</source>
                     <target>21</target>
                     <encoding>UTF-8</encoding>
+<!--                    JetCache 的 @Cached 注解基于 AOP 实现 SpEL 表达式依赖这个编译-->
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
