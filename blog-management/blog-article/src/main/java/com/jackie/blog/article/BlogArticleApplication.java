@@ -10,13 +10,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.jackie.blog.article.dao")
+@EnableDiscoveryClient
 @EnableDubbo
 public class BlogArticleApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(BlogArticleApplication.class, args);
         MybatisPlusProperties properties = context.getBean(MybatisPlusProperties.class);
-        System.out.println("MyBatis-Plus ID 策略: " + properties.getGlobalConfig().getDbConfig().getIdType());
     }
 
 }

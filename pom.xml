@@ -148,6 +148,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 关键！生成可执行 Fat Jar -->
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
