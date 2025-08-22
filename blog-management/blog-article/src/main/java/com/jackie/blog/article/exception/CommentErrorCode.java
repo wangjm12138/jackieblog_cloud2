@@ -17,8 +17,13 @@ public enum CommentErrorCode implements ErrorCode {
     /**
      * 用户不存在
      */
-    COMMENT_USER_NOT_EXIST("USER_NOT_EXIST", "用户不存在");
+    COMMENT_USER_NOT_EXIST("USER_NOT_EXIST", "用户不存在"),
 
+
+    /**
+     * 评论太频繁
+     */
+    COMMENT_TOO_MANY_COMMENT("TOO_MANY_COMMENT", "");
 
     private String code;
 
@@ -37,6 +42,10 @@ public enum CommentErrorCode implements ErrorCode {
     @Override
     public String getMessage() {
         return this.message;
+    }
+
+    public void setMssage(String mssage){
+        this.message = mssage;
     }
 }
 

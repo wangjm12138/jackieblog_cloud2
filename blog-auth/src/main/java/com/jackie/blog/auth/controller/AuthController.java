@@ -10,8 +10,12 @@ import com.jackie.blog.api.user.response.data.UserInfo;
 import com.jackie.blog.auth.exception.AuthException;
 import com.jackie.blog.auth.param.LoginParam;
 import com.jackie.blog.auth.param.RegisterParam;
+import com.jackie.blog.auth.service.RateLimitService;
 import com.jackie.blog.auth.vo.LoginVO;
+import com.jackie.blog.base.utility.HelpFun;
 import com.jackie.blog.base.vo.Result;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -19,17 +23,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import com.jackie.blog.api.user.request.UserRegisterRequest;
 import com.jackie.blog.api.user.service.UserFacadeService;
 
-import static com.jackie.blog.auth.exception.AuthErrorCode.VERIFICATION_CODE_WRONG;
+import static com.jackie.blog.auth.exception.AuthErrorCode.*;
 
 @RestController
 @RequestMapping("api/auth")
 public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
+
+    private static final HelpFun helpFun = new HelpFun();
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -38,11 +46,16 @@ public class AuthController {
     @DubboReference(version = "1.0.0")
     private UserFacadeService userFacadeService;
 
+    @Autowired
+    private RateLimitService rateLimitService;
+
     /**
      * 默认登录超时时间：7天
      */
     private static final Integer DEFAULT_LOGIN_SESSION_TIMEOUT = 60 * 60 * 24 * 7;
 
+    private static final long GLOBAL_SIGNUP_LIMIT = 500L;  //全局每天最多注册数
+    private static final long PER_IP_SIGNUP_LIMIT = 20L;  //单个IP每天最多注册数
 //    @GetMapping("/test")
 //    public Result<Boolean> test() throws Exception {
 //        UserOperatorResponse userOperatorResponse = userFacadeService.test();
@@ -82,8 +95,19 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Result register(@Valid @RequestBody RegisterParam registerParam) {
-        //注册
+    public Result register(@Valid @RequestBody RegisterParam registerParam, HttpServletRequest httpRequest) {
+        //获取IP
+        String clientIp = helpFun.getClientIp(httpRequest);
+        // 1. 先检查单IP限制 (成本低，更可能触发，快速失败)
+        if (!rateLimitService.isOperationAllowedForIdentifier("signup", "ip:" + clientIp, PER_IP_SIGNUP_LIMIT)) {
+            throw new AuthException(IP_REGISTER_EXCEED);
+        }
+
+        // 2. 再检查全局限制
+        if (!rateLimitService.isGlobalOperationAllowed("signup", GLOBAL_SIGNUP_LIMIT)) {
+            throw new AuthException(GLOBAL_REGISTER_EXCEED);
+        }
+
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
         userRegisterRequest.setUsername(registerParam.getUsername());
         userRegisterRequest.setPassword(registerParam.getPassword());
@@ -100,5 +124,10 @@ public class AuthController {
     public Result<Boolean> logout(){
         StpUtil.logout();
         return Result.success(true);
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("@PostConstruct Called!"); // 或者在这里打断点
     }
 }

@@ -3,6 +3,7 @@ package com.jackie.blog.web.handler;
 import com.jackie.blog.base.exception.BizException;
 import com.jackie.blog.base.exception.SystemException;
 import com.jackie.blog.base.vo.Result;
+import jakarta.security.auth.message.AuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

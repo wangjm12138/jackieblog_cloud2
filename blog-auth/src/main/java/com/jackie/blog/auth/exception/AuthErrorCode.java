@@ -31,7 +31,17 @@ public enum AuthErrorCode implements ErrorCode {
     /**
      * 用户不存在
      */
-    USER_NOT_EXIST("USER_NOT_EXIST", "用户不存在");
+    USER_NOT_EXIST("USER_NOT_EXIST", "用户不存在"),
+
+    /**
+     * 单IP注册上线
+     */
+    IP_REGISTER_EXCEED("IP_REGISTER_EXCEED", "该IP注册已到达上限"),
+
+    /**
+     * 单IP注册上线
+     */
+    GLOBAL_REGISTER_EXCEED("GLOBAL_REGISTER_EXCEED", "单日注册已到达上限");
 
     private String code;
 
