@@ -36,6 +36,16 @@ public enum AuthErrorCode implements ErrorCode {
     /**
      * 单IP注册上线
      */
+    IP_LOGIN_EXCEED("IP_LOGIN_EXCEED", "该IP登录已到达上限"),
+
+    /**
+     * 单IP注册上线
+     */
+    GLOBAL_LOGIN_EXCEED("GLOBAL_LOGIN_EXCEED", "单日注册已到达上限"),
+
+    /**
+     * 单IP注册上线
+     */
     IP_REGISTER_EXCEED("IP_REGISTER_EXCEED", "该IP注册已到达上限"),
 
     /**

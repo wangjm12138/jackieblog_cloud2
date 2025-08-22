@@ -56,13 +56,28 @@ public class AuthController {
 
     private static final long GLOBAL_SIGNUP_LIMIT = 500L;  //全局每天最多注册数
     private static final long PER_IP_SIGNUP_LIMIT = 20L;  //单个IP每天最多注册数
+
+
+    private static final long GLOBAL_LOGIN_LIMIT = 500L;  //全局每天最多登录人数
+    private static final long PER_IP_LOGIN_LIMIT = 20L;  //单个IP每天最多登录人数
 //    @GetMapping("/test")
 //    public Result<Boolean> test() throws Exception {
 //        UserOperatorResponse userOperatorResponse = userFacadeService.test();
 //        return Result.success(true);
 //    }
     @PostMapping("/login")
-    public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam) throws Exception {
+    public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam, HttpServletRequest httpRequest) throws Exception {
+        //获取IP
+        String clientIp = helpFun.getClientIp(httpRequest);
+        // 1. 先检查单IP限制 (成本低，更可能触发，快速失败)
+        if (!rateLimitService.isOperationAllowedForIdentifier("login", "ip:" + clientIp, PER_IP_LOGIN_LIMIT)) {
+            throw new AuthException(IP_LOGIN_EXCEED);
+        }
+        // 2. 再检查全局限制
+        if (!rateLimitService.isGlobalOperationAllowed("login", GLOBAL_LOGIN_LIMIT)) {
+            throw new AuthException(GLOBAL_LOGIN_EXCEED);
+        }
+
         UserInfo userInfo = null;
         UserOperatorResponse userOperatorResponse = null;
         if("password".equals(loginParam.getLoginType())) {
