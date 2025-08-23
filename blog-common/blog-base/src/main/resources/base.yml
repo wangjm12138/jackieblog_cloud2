@@ -3,7 +3,7 @@ jackie:
   blog:
     nacos:
       server:
-        url: http://jackieblog-nacos:8848
+        url: jackieblog-nacos:8848
     mysql:
       #url: jdbc:mysql://175.178.122.46:3306/jackieblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
       url: jdbc:mysql://jackieblog-mysql:3306/jackieblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
