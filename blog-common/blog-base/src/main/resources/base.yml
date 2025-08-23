@@ -3,13 +3,14 @@ jackie:
   blog:
     nacos:
       server:
-        url: 127.0.0.1:8848
+        url: http://jackieblog-nacos:8848
     mysql:
-      url: jdbc:mysql://175.178.122.46:3306/jackieblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      #url: jdbc:mysql://175.178.122.46:3306/jackieblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://jackieblog-mysql:3306/jackieblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: mysql6779755
     redis:
-      url: 127.0.0.1  # nft.turbo.redis.url - Redis 的地址 #首次启动前务必修改成你自己的
+      url: jackieblog-redis  # nft.turbo.redis.url - Redis 的地址 #首次启动前务必修改成你自己的
       port: 6379  # nft.turbo.redis.port - Redis 的端口号 #首次启动前务必修改成你自己的
       password: # nft.turbo.redis.password - Redis 的密码 #首次启动前务必修改成你自己的
 #    elasticsearch:
